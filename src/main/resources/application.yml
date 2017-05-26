@@ -1,0 +1,12 @@
+spring:
+  ## spring boot devtools
+  devtools:
+    livereload:
+      enabled: true
+
+  ## H2 Web console
+  h2:
+    console:
+      enabled: true
+      path: "/h2console"
+
