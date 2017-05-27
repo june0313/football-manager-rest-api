@@ -1,9 +1,8 @@
 package com.jun.fm.domain.player;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jun.fm.domain.club.Club;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -24,6 +23,7 @@ public class Player {
 
 	private String email;
 
+	@JsonIgnore
 	private String password;
 
 	@Enumerated(value = EnumType.STRING)
@@ -31,5 +31,9 @@ public class Player {
 
 	@ManyToOne
 	private Club club;
+
+	public boolean belongToClub() {
+		return club != null;
+	}
 
 }

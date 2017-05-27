@@ -1,6 +1,11 @@
 package com.jun.fm.domain.club;
 
+import com.google.common.collect.Lists;
 import com.jun.fm.domain.player.Player;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,6 +15,10 @@ import java.util.List;
  *
  */
 @Entity
+@Getter
+@Setter
+@Accessors(chain = true)
+@NoArgsConstructor(staticName = "create")
 public class Club {
 	@Id
 	@GeneratedValue
@@ -22,5 +31,13 @@ public class Club {
 
 	@OneToMany(mappedBy = "club")
 	private List<Player> players;
+
+	public void addPlayer(Player player) {
+		if (players == null) {
+			players = Lists.newArrayList();
+		}
+
+		players.add(player);
+	}
 
 }
