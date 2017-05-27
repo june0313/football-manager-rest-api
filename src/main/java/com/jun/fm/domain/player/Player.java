@@ -12,7 +12,7 @@ import javax.persistence.*;
  *
  */
 @Entity
-@Data
+@Data(staticConstructor = "create")
 @Accessors(chain = true)
 public class Player {
 	@Id

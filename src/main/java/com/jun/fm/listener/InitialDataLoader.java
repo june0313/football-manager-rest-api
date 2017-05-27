@@ -25,10 +25,10 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		playerRepository.save(Arrays.asList(
-			new Player().setName("testPlayer1").setEmail("test1@test.com").setPassword("password").setPosition(Position.DEFENDER),
-			new Player().setName("testPlayer2").setEmail("test2@test.com").setPassword("password").setPosition(Position.FORWARD),
-			new Player().setName("testPlayer3").setEmail("test3@test.com").setPassword("password").setPosition(Position.GOALKEEPER),
-			new Player().setName("testPlayer4").setEmail("test4@test.com").setPassword("password").setPosition(Position.MIDFIELDER)
+			Player.create().setName("testPlayer1").setEmail("test1@test.com").setPassword("password").setPosition(Position.DEFENDER),
+			Player.create().setName("testPlayer2").setEmail("test2@test.com").setPassword("password").setPosition(Position.FORWARD),
+			Player.create().setName("testPlayer3").setEmail("test3@test.com").setPassword("password").setPosition(Position.GOALKEEPER),
+			Player.create().setName("testPlayer4").setEmail("test4@test.com").setPassword("password").setPosition(Position.MIDFIELDER)
 		));
 	}
 
