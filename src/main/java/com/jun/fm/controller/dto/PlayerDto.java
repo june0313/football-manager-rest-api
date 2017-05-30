@@ -1,6 +1,5 @@
 package com.jun.fm.controller.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jun.fm.domain.player.Player;
 import com.jun.fm.domain.player.Position;
 import lombok.Data;
