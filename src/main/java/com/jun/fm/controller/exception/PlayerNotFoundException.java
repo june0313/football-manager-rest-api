@@ -1,14 +1,17 @@
 package com.jun.fm.controller.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 /**
  * Created by wayne on 2017. 5. 26..
  *
  */
-@AllArgsConstructor
-@Getter
 public class PlayerNotFoundException extends RuntimeException {
-	private Long playerId;
+
+	public PlayerNotFoundException(Long id) {
+		super(String.format("Player %d not found", id));
+	}
+
+	public PlayerNotFoundException(String name) {
+		super(String.format("Player %s not found", name));
+	}
+
 }

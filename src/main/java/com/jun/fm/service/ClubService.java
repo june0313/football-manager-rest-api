@@ -3,7 +3,6 @@ package com.jun.fm.service;
 import com.jun.fm.domain.club.Club;
 import com.jun.fm.domain.player.Player;
 import com.jun.fm.repository.ClubRepository;
-import com.jun.fm.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,20 +15,12 @@ public class ClubService {
 
 	@Autowired
 	private ClubRepository clubRepository;
-	@Autowired
-	private PlayerRepository playerRepository;
 
 	public Club findById(Long id) {
 		return clubRepository.findOne(id);
 	}
 
-	public Club createClub(Long ownerId, Club club) {
-		Player owner = playerRepository.findOne(ownerId);
-
-		if (owner == null || owner.belongToClub()) {
-			return null;
-		}
-
+	public Club create(Player owner, Club club) {
 		owner.setClub(club);
 		club.setOwner(owner);
 		club.addPlayer(owner);

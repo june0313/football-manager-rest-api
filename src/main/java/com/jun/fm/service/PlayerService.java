@@ -19,6 +19,10 @@ public class PlayerService {
 		return playerRepository.findOne(id);
 	}
 
+	public Player findByName(String name) {
+		return playerRepository.findPlayerByName(name);
+	}
+
 	public Player create(Player player) {
 		return playerRepository.save(player);
 	}

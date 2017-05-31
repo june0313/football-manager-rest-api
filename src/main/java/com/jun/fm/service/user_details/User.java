@@ -21,7 +21,7 @@ public class User implements UserDetails {
 	private Collection<? extends GrantedAuthority> authorities;
 
 	public User(Player player) {
-		this.username = player.getEmail();
+		this.username = player.getName();
 		this.password = player.getPassword();
 		this.authorities = player.getRoles().stream().map(Role::getName).map(SimpleGrantedAuthority::new).collect(toList());
 	}
