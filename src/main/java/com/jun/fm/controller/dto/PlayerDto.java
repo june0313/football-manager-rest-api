@@ -15,15 +15,7 @@ public class PlayerDto {
 	private String name;
 	private String email;
 	private String password;
-	private String position;
-
-	public Player toEntity() {
-		return Player.create()
-			.setName(getName())
-			.setEmail(getEmail())
-			.setPassword(getPassword())
-			.setPosition(Position.valueOf(getPosition()));
-	}
+	private Position position;
 
 	public static PlayerDto from(Player player) {
 		PlayerDto playerDto = new PlayerDto();
@@ -33,4 +25,12 @@ public class PlayerDto {
 		return playerDto;
 	}
 
+	public static PlayerDto of(String name, String email, String password, Position position) {
+		PlayerDto dto = new PlayerDto();
+		dto.setName(name);
+		dto.setEmail(email);
+		dto.setPassword(password);
+		dto.setPosition(position);
+		return dto;
+	}
 }

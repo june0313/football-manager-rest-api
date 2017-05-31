@@ -47,9 +47,7 @@ public class ClubController {
 
 		Player player = playerService.findByName(playerName);
 
-
-
-		if (player != null) {
+		if (player == null) {
 			throw new PlayerNotFoundException(playerName);
 		}
 

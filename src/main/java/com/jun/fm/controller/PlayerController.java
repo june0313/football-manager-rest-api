@@ -29,8 +29,7 @@ public class PlayerController {
 
 	@PostMapping
 	public PlayerDto create(@RequestBody PlayerDto playerDto) {
-		log.info("playerDTO : {}", playerDto);
-		Player player = playerService.create(playerDto.toEntity());
+		Player player = playerService.create(playerDto);
 		return Optional.ofNullable(player).map(PlayerDto::from).orElseThrow(RuntimeException::new);
 	}
 
