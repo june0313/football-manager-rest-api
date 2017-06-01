@@ -6,6 +6,8 @@ import com.jun.fm.domain.player.Player;
 import com.jun.fm.service.PlayerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -25,6 +27,11 @@ public class PlayerController {
 	@GetMapping("/{id}")
 	public Player getById(@PathVariable Long id) {
 		return Optional.ofNullable(playerService.findById(id)).orElseThrow(() -> new PlayerNotFoundException(id));
+	}
+
+	@GetMapping
+	public Page<PlayerDto> getPlayers(Pageable pageable) {
+		return playerService.findList(pageable);
 	}
 
 	@PostMapping

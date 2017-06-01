@@ -1,8 +1,11 @@
 package com.jun.fm.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.jun.fm.domain.player.Player;
 import com.jun.fm.domain.player.Position;
 import lombok.Data;
+
+import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * Created by wayne on 2017. 5. 27..
@@ -14,6 +17,7 @@ public class PlayerDto {
 	private Long id;
 	private String name;
 	private String email;
+	@JsonInclude(Include.NON_NULL)
 	private String password;
 	private Position position;
 
@@ -22,6 +26,7 @@ public class PlayerDto {
 		playerDto.setId(player.getId());
 		playerDto.setEmail(player.getEmail());
 		playerDto.setName(player.getName());
+		playerDto.setPosition(player.getPosition());
 		return playerDto;
 	}
 

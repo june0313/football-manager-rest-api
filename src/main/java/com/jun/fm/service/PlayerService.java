@@ -4,6 +4,8 @@ import com.jun.fm.controller.dto.PlayerDto;
 import com.jun.fm.domain.player.Player;
 import com.jun.fm.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,10 @@ public class PlayerService {
 
 	public Player findByName(String name) {
 		return playerRepository.findPlayerByName(name);
+	}
+
+	public Page<PlayerDto> findList(Pageable pageable) {
+		return playerRepository.findAll(pageable).map(PlayerDto::from);
 	}
 
 	public Player create(PlayerDto dto) {
