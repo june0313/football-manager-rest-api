@@ -10,3 +10,8 @@ spring:
       enabled: true
       path: "/h2console"
 
+security:
+  basic:
+    enabled: false
+
+
