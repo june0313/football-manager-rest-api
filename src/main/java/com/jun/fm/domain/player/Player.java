@@ -37,11 +37,24 @@ public class Player {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Role> roles;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Club club;
 
 	public boolean belongToClub() {
 		return club != null;
+	}
+
+	public void setClub(Club club) {
+		if (this.club != null) {
+			this.club.getPlayers().remove(this);
+		}
+
+		this.club = club;
+		club.addPlayer(this);
+
+		if (club.getOwner() == null) {
+			club.setOwner(this);
+		}
 	}
 
 }

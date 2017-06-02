@@ -1,9 +1,12 @@
 package com.jun.fm.service;
 
+import com.jun.fm.controller.dto.ClubDto;
 import com.jun.fm.domain.club.Club;
 import com.jun.fm.domain.player.Player;
 import com.jun.fm.repository.ClubRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,11 +23,12 @@ public class ClubService {
 		return clubRepository.findOne(id);
 	}
 
+	public Page<ClubDto> findList(Pageable pageable) {
+		return clubRepository.findAll(pageable).map(ClubDto::from);
+	}
+
 	public Club create(Player owner, Club club) {
 		owner.setClub(club);
-		club.setOwner(owner);
-		club.addPlayer(owner);
-
 		return clubRepository.save(club);
 	}
 
