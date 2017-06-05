@@ -25,8 +25,10 @@ public class PlayerController {
 	private PlayerService playerService;
 
 	@GetMapping("/{id}")
-	public Player getById(@PathVariable Long id) {
-		return Optional.ofNullable(playerService.findById(id)).orElseThrow(() -> new PlayerNotFoundException(id));
+	public PlayerDto getById(@PathVariable Long id) {
+		return Optional.ofNullable(playerService.findById(id))
+			.map(PlayerDto::from)
+			.orElseThrow(() -> new PlayerNotFoundException(id));
 	}
 
 	@GetMapping
