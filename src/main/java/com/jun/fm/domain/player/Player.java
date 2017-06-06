@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -39,6 +40,21 @@ public class Player {
 
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Club club;
+
+	private LocalDateTime createdDate;
+
+	private LocalDateTime modifiedDate;
+
+	@PrePersist
+	private void prePersist() {
+		this.createdDate = LocalDateTime.now();
+		this.modifiedDate = LocalDateTime.now();
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		this.modifiedDate = LocalDateTime.now();
+	}
 
 	public boolean belongToClub() {
 		return club != null;

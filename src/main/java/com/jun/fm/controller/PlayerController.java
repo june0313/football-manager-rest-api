@@ -1,6 +1,6 @@
 package com.jun.fm.controller;
 
-import com.jun.fm.controller.dto.PlayerDto;
+import com.jun.fm.service.dto.PlayerDto;
 import com.jun.fm.controller.exception.PlayerNotFoundException;
 import com.jun.fm.domain.player.Player;
 import com.jun.fm.service.PlayerService;

@@ -2,17 +2,23 @@ package com.jun.fm.listener;
 
 import com.google.common.collect.ImmutableList;
 import com.jun.fm.annotation.profile.LocalProfile;
-import com.jun.fm.controller.dto.PlayerDto;
 import com.jun.fm.domain.club.Club;
+import com.jun.fm.domain.game.Game;
+import com.jun.fm.domain.game.GameState;
 import com.jun.fm.domain.player.Player;
 import com.jun.fm.domain.player.Position;
 import com.jun.fm.repository.ClubRepository;
+import com.jun.fm.repository.GameRepository;
 import com.jun.fm.repository.PlayerRepository;
 import com.jun.fm.service.PlayerService;
+import com.jun.fm.service.dto.PlayerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 /**
  * Created by wayne on 2017. 5. 26..
@@ -20,6 +26,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @LocalProfile
+@Transactional
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 	@Autowired
@@ -31,10 +38,14 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	@Autowired
 	private ClubRepository clubRepository;
 
+	@Autowired
+	private GameRepository gameRepository;
+
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		createPlayersForLocalTest();
 		createClubs();
+		createGames();
 	}
 
 	private void createPlayersForLocalTest() {
@@ -57,6 +68,19 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
 		clubRepository.save(club);
 		playerRepository.save(ImmutableList.of(player1, player2));
+	}
+
+	private void createGames() {
+		Club club = clubRepository.findOne(1L);
+
+		Game game = new Game();
+		game.setHost(club);
+		game.setState(GameState.OPEN);
+		game.setDetails("게임해요");
+		game.setMatchLocation("관악구 축구장");
+		game.setMatchDate(LocalDateTime.now().plusDays(7));
+
+		gameRepository.save(game);
 	}
 
 }

@@ -1,6 +1,6 @@
 package com.jun.fm.service;
 
-import com.jun.fm.controller.dto.PlayerDto;
+import com.jun.fm.service.dto.PlayerDto;
 import com.jun.fm.domain.player.Player;
 import com.jun.fm.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;

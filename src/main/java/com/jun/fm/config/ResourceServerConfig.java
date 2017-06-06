@@ -26,6 +26,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		http.csrf().disable();
 		http.authorizeRequests()
 			.antMatchers(HttpMethod.POST, "/clubs").authenticated()
+			.antMatchers(HttpMethod.POST, "/games").authenticated()
 			.anyRequest().permitAll();
 	}
 
