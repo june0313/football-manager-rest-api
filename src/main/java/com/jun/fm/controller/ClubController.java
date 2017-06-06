@@ -1,6 +1,6 @@
 package com.jun.fm.controller;
 
-import com.jun.fm.service.dto.ClubDto;
+import com.jun.fm.dto.ClubDto;
 import com.jun.fm.controller.exception.ClubCreationFailureException;
 import com.jun.fm.controller.exception.ClubNotFoundException;
 import com.jun.fm.controller.exception.PlayerAlreadyBelongsToClubException;

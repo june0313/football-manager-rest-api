@@ -1,7 +1,7 @@
 package com.jun.fm.controller;
 
 import com.jun.fm.service.GameService;
-import com.jun.fm.service.dto.GameDto;
+import com.jun.fm.dto.GameDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

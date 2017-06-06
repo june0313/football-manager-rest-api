@@ -1,6 +1,7 @@
 package com.jun.fm.domain.club;
 
 import com.google.common.collect.Lists;
+import com.jun.fm.domain.apply.Apply;
 import com.jun.fm.domain.game.Game;
 import com.jun.fm.domain.player.Player;
 import lombok.Getter;
@@ -38,6 +39,9 @@ public class Club {
 	@OneToMany(mappedBy = "host")
 	private List<Game> games;
 
+	@OneToMany(mappedBy = "club")
+	private List<Apply> applies;
+
 	private LocalDateTime createdDate;
 
 	private LocalDateTime modifiedDate;
@@ -61,12 +65,20 @@ public class Club {
 		this.players.add(player);
 	}
 
-	public void addGames(Game game) {
+	public void addGame(Game game) {
 		if (this.games == null) {
 			this.games = Lists.newArrayList();
 		}
 
 		this.games.add(game);
+	}
+
+	public void addApply(Apply apply) {
+		if (this.applies == null) {
+			this.applies = Lists.newArrayList();
+		}
+
+		this.applies.add(apply);
 	}
 
 }

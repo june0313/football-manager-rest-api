@@ -1,42 +1,42 @@
 package com.jun.fm.service;
 
+import com.jun.fm.controller.exception.GameNotFoundException;
+import com.jun.fm.domain.apply.Apply;
+import com.jun.fm.domain.apply.ApplyState;
 import com.jun.fm.domain.club.Club;
 import com.jun.fm.domain.game.Game;
 import com.jun.fm.domain.player.Player;
+import com.jun.fm.dto.ApplyDto;
+import com.jun.fm.repository.ApplyRepository;
 import com.jun.fm.repository.GameRepository;
 import com.jun.fm.repository.PlayerRepository;
-import com.jun.fm.dto.GameDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.Optional;
 
 /**
- * Created by wayne on 2017. 6. 3..
+ * Created by wayne on 2017. 6. 6..
  *
  */
 @Service
-public class GameService {
+@Transactional
+public class ApplyService {
+
+	@Autowired
+	private ApplyRepository applyRepository;
 
 	@Autowired
 	private GameRepository gameRepository;
+
 	@Autowired
 	private PlayerRepository playerRepository;
 
-	public GameDto findById(Long id) {
-		Game game = gameRepository.findOne(id);
-
-		if (game == null) {
-			return null;
-		}
-
-		return GameDto.from(game);
-	}
-
-	public GameDto create(GameDto gameDto) {
+	public ApplyDto apply(Long gameId, ApplyDto applyDto) {
 		SecurityContext context = SecurityContextHolder.getContext();
 
 		Club club = Optional.ofNullable(context)
@@ -46,12 +46,18 @@ public class GameService {
 			.map(Player::getClub)
 			.orElseThrow(() -> new RuntimeException("no club"));
 
-		Game game = new Game();
-		game.setHost(club);
-		game.setMatchDate(gameDto.getMatchDate());
-		game.setDetails(gameDto.getDetails());
-		game.setMatchLocation(gameDto.getMatchLocation());
+		Game game = gameRepository.findOne(gameId);
+		if (game == null) {
+			throw new GameNotFoundException(gameId);
+		}
 
-		return GameDto.from(gameRepository.save(game));
+		Apply apply = new Apply();
+		apply.setClub(club);
+		apply.setGame(game);
+		apply.setMessage(applyDto.getMessage());
+		apply.setState(ApplyState.PENDING);
+
+		return ApplyDto.from(applyRepository.save(apply));
 	}
+
 }

@@ -2,16 +2,18 @@ package com.jun.fm.listener;
 
 import com.google.common.collect.ImmutableList;
 import com.jun.fm.annotation.profile.LocalProfile;
+import com.jun.fm.domain.apply.Apply;
+import com.jun.fm.domain.apply.ApplyState;
 import com.jun.fm.domain.club.Club;
 import com.jun.fm.domain.game.Game;
 import com.jun.fm.domain.game.GameState;
-import com.jun.fm.domain.player.Player;
 import com.jun.fm.domain.player.Position;
+import com.jun.fm.dto.PlayerDto;
+import com.jun.fm.repository.ApplyRepository;
 import com.jun.fm.repository.ClubRepository;
 import com.jun.fm.repository.GameRepository;
 import com.jun.fm.repository.PlayerRepository;
 import com.jun.fm.service.PlayerService;
-import com.jun.fm.service.dto.PlayerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 /**
  * Created by wayne on 2017. 5. 26..
@@ -41,11 +44,15 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	@Autowired
 	private GameRepository gameRepository;
 
+	@Autowired
+	private ApplyRepository applyRepository;
+
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		createPlayersForLocalTest();
 		createClubs();
 		createGames();
+		createApplies();
 	}
 
 	private void createPlayersForLocalTest() {
@@ -53,21 +60,26 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 			PlayerDto.of("player1", "player1@test.com", "password", Position.DEFENDER),
 			PlayerDto.of("player2", "player2@test.com", "password", Position.FORWARD),
 			PlayerDto.of("player3", "player3@test.com", "password", Position.MIDFIELDER),
-			PlayerDto.of("player4", "player4@test.com", "password", Position.GOALKEEPER)
+			PlayerDto.of("player4", "player4@test.com", "password", Position.GOALKEEPER),
+			PlayerDto.of("player5", "player5@test.com", "password", Position.MIDFIELDER),
+			PlayerDto.of("player6", "player6@test.com", "password", Position.MIDFIELDER)
 		).forEach(playerService::create);
 	}
 
 	private void createClubs() {
-		Club club = Club.create().setName("club1");
+		Club clubReal = Club.create().setName("real");
+		playerRepository.findOne(1L).setClub(clubReal);
+		playerRepository.findOne(2L).setClub(clubReal);
 
-		Player player1 = playerRepository.findOne(1L);
-		Player player2 = playerRepository.findOne(2L);
+		Club clubArsenal = Club.create().setName("arsenal");
+		playerRepository.findOne(3L).setClub(clubArsenal);
+		playerRepository.findOne(4L).setClub(clubArsenal);
 
-		player1.setClub(club);
-		player2.setClub(club);
+		Club clubManu = Club.create().setName("manu");
+		playerRepository.findOne(5L).setClub(clubManu);
+		playerRepository.findOne(6L).setClub(clubManu);
 
-		clubRepository.save(club);
-		playerRepository.save(ImmutableList.of(player1, player2));
+		clubRepository.save(Arrays.asList(clubReal, clubArsenal, clubManu));
 	}
 
 	private void createGames() {
@@ -81,6 +93,27 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		game.setMatchDate(LocalDateTime.now().plusDays(7));
 
 		gameRepository.save(game);
+	}
+
+	private void createApplies() {
+		Club club = clubRepository.findOne(2L);
+		Game game = gameRepository.findOne(1L);
+
+		Apply apply = new Apply();
+		apply.setClub(club);
+		apply.setGame(game);
+		apply.setMessage("저희 팀이랑 한판 해요");
+		apply.setState(ApplyState.PENDING);
+
+		Club club2 = clubRepository.findOne(3L);
+
+		Apply apply2 = new Apply();
+		apply2.setClub(club2);
+		apply2.setGame(game);
+		apply2.setMessage("게임을 신청합니다.");
+		apply2.setState(ApplyState.PENDING);
+
+		applyRepository.save(Arrays.asList(apply, apply2));
 	}
 
 }

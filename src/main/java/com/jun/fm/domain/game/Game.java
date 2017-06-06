@@ -1,10 +1,13 @@
 package com.jun.fm.domain.game;
 
+import com.google.common.collect.Lists;
+import com.jun.fm.domain.apply.Apply;
 import com.jun.fm.domain.club.Club;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Created by wayne on 2017. 6. 3..
@@ -21,6 +24,9 @@ public class Game {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Club host;
 
+	@OneToMany(mappedBy = "game")
+	private List<Apply> applies;
+
 	private LocalDateTime matchDate;
 
 	private String matchLocation;
@@ -36,7 +42,15 @@ public class Game {
 
 	public void setHost(Club club) {
 		this.host = club;
-		club.addGames(this);
+		club.addGame(this);
+	}
+
+	public void addApply(Apply apply) {
+		if (this.applies == null) {
+			this.applies = Lists.newArrayList();
+		}
+
+		this.applies.add(apply);
 	}
 
 	@PrePersist
