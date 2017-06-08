@@ -1,13 +1,13 @@
 package com.jun.fm.service;
 
 import com.jun.fm.controller.exception.GameNotFoundException;
-import com.jun.fm.domain.apply.Apply;
-import com.jun.fm.domain.apply.ApplyState;
+import com.jun.fm.domain.application.Application;
+import com.jun.fm.domain.application.ApplicationState;
 import com.jun.fm.domain.club.Club;
 import com.jun.fm.domain.game.Game;
 import com.jun.fm.domain.player.Player;
-import com.jun.fm.dto.ApplyDto;
-import com.jun.fm.repository.ApplyRepository;
+import com.jun.fm.dto.ApplicationDto;
+import com.jun.fm.repository.ApplicationRepository;
 import com.jun.fm.repository.GameRepository;
 import com.jun.fm.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +25,10 @@ import java.util.Optional;
  */
 @Service
 @Transactional
-public class ApplyService {
+public class ApplicationService {
 
 	@Autowired
-	private ApplyRepository applyRepository;
+	private ApplicationRepository applicationRepository;
 
 	@Autowired
 	private GameRepository gameRepository;
@@ -36,7 +36,7 @@ public class ApplyService {
 	@Autowired
 	private PlayerRepository playerRepository;
 
-	public ApplyDto apply(Long gameId, ApplyDto applyDto) {
+	public ApplicationDto apply(Long gameId, ApplicationDto applicationDto) {
 		SecurityContext context = SecurityContextHolder.getContext();
 
 		Club club = Optional.ofNullable(context)
@@ -51,13 +51,13 @@ public class ApplyService {
 			throw new GameNotFoundException(gameId);
 		}
 
-		Apply apply = new Apply();
-		apply.setClub(club);
-		apply.setGame(game);
-		apply.setMessage(applyDto.getMessage());
-		apply.setState(ApplyState.PENDING);
+		Application application = new Application();
+		application.setClub(club);
+		application.setGame(game);
+		application.setMessage(applicationDto.getMessage());
+		application.setState(ApplicationState.PENDING);
 
-		return ApplyDto.from(applyRepository.save(apply));
+		return ApplicationDto.from(applicationRepository.save(application));
 	}
 
 }

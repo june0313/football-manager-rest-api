@@ -1,7 +1,7 @@
 package com.jun.fm.domain.game;
 
 import com.google.common.collect.Lists;
-import com.jun.fm.domain.apply.Apply;
+import com.jun.fm.domain.application.Application;
 import com.jun.fm.domain.club.Club;
 import lombok.Data;
 
@@ -25,7 +25,7 @@ public class Game {
 	private Club host;
 
 	@OneToMany(mappedBy = "game")
-	private List<Apply> applies;
+	private List<Application> applications;
 
 	private LocalDateTime matchDate;
 
@@ -45,12 +45,12 @@ public class Game {
 		club.addGame(this);
 	}
 
-	public void addApply(Apply apply) {
-		if (this.applies == null) {
-			this.applies = Lists.newArrayList();
+	public void addApplication(Application application) {
+		if (this.applications == null) {
+			this.applications = Lists.newArrayList();
 		}
 
-		this.applies.add(apply);
+		this.applications.add(application);
 	}
 
 	@PrePersist

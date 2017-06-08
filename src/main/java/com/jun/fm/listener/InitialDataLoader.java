@@ -2,14 +2,14 @@ package com.jun.fm.listener;
 
 import com.google.common.collect.ImmutableList;
 import com.jun.fm.annotation.profile.LocalProfile;
-import com.jun.fm.domain.apply.Apply;
-import com.jun.fm.domain.apply.ApplyState;
+import com.jun.fm.domain.application.Application;
+import com.jun.fm.domain.application.ApplicationState;
 import com.jun.fm.domain.club.Club;
 import com.jun.fm.domain.game.Game;
 import com.jun.fm.domain.game.GameState;
 import com.jun.fm.domain.player.Position;
 import com.jun.fm.dto.PlayerDto;
-import com.jun.fm.repository.ApplyRepository;
+import com.jun.fm.repository.ApplicationRepository;
 import com.jun.fm.repository.ClubRepository;
 import com.jun.fm.repository.GameRepository;
 import com.jun.fm.repository.PlayerRepository;
@@ -45,7 +45,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	private GameRepository gameRepository;
 
 	@Autowired
-	private ApplyRepository applyRepository;
+	private ApplicationRepository applicationRepository;
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -99,21 +99,21 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		Club club = clubRepository.findOne(2L);
 		Game game = gameRepository.findOne(1L);
 
-		Apply apply = new Apply();
-		apply.setClub(club);
-		apply.setGame(game);
-		apply.setMessage("저희 팀이랑 한판 해요");
-		apply.setState(ApplyState.PENDING);
+		Application application = new Application();
+		application.setClub(club);
+		application.setGame(game);
+		application.setMessage("저희 팀이랑 한판 해요");
+		application.setState(ApplicationState.PENDING);
 
 		Club club2 = clubRepository.findOne(3L);
 
-		Apply apply2 = new Apply();
-		apply2.setClub(club2);
-		apply2.setGame(game);
-		apply2.setMessage("게임을 신청합니다.");
-		apply2.setState(ApplyState.PENDING);
+		Application application2 = new Application();
+		application2.setClub(club2);
+		application2.setGame(game);
+		application2.setMessage("게임을 신청합니다.");
+		application2.setState(ApplicationState.PENDING);
 
-		applyRepository.save(Arrays.asList(apply, apply2));
+		applicationRepository.save(Arrays.asList(application, application2));
 	}
 
 }

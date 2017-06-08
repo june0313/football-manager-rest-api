@@ -1,4 +1,4 @@
-package com.jun.fm.domain.apply;
+package com.jun.fm.domain.application;
 
 import com.jun.fm.domain.BaseEntity;
 import com.jun.fm.domain.club.Club;
@@ -18,7 +18,7 @@ import javax.persistence.ManyToOne;
 @Entity
 @Getter
 @Setter
-public class Apply extends BaseEntity{
+public class Application extends BaseEntity{
 
 	@ManyToOne
 	private Game game;
@@ -29,16 +29,16 @@ public class Apply extends BaseEntity{
 	private String message;
 
 	@Enumerated(EnumType.STRING)
-	private ApplyState state;
+	private ApplicationState state;
 
 	public void setClub(Club club) {
 		this.club = club;
-		club.addApply(this);
+		club.addApplication(this);
 	}
 
 	public void setGame(Game game) {
 		this.game = game;
-		game.addApply(this);
+		game.addApplication(this);
 	}
 
 }
