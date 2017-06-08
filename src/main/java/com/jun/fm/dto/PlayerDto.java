@@ -1,4 +1,4 @@
-package com.jun.fm.controller.dto;
+package com.jun.fm.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.jun.fm.domain.player.Player;

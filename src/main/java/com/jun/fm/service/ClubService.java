@@ -1,6 +1,6 @@
 package com.jun.fm.service;
 
-import com.jun.fm.controller.dto.ClubDto;
+import com.jun.fm.dto.ClubDto;
 import com.jun.fm.domain.club.Club;
 import com.jun.fm.domain.player.Player;
 import com.jun.fm.repository.ClubRepository;

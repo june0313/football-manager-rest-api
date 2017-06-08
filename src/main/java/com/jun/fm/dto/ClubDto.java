@@ -1,4 +1,4 @@
-package com.jun.fm.controller.dto;
+package com.jun.fm.dto;
 
 import com.jun.fm.domain.club.Club;
 import lombok.Getter;
