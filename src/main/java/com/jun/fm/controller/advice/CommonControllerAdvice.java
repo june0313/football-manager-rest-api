@@ -6,12 +6,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by wayne on 2017. 5. 31..
  * Controller 예외 처리
  */
 @ControllerAdvice
+@RestController
 public class CommonControllerAdvice {
 
 	@ExceptionHandler(PlayerNotFoundException.class)
@@ -30,6 +32,12 @@ public class CommonControllerAdvice {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public Error clubNotFound(ClubNotFoundException e) {
 		return Error.of(HttpStatus.NOT_FOUND.value(), String.format("Club %d not found", e.getClubId()));
+	}
+
+	@ExceptionHandler(GameNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public Error gameNotFound(GameNotFoundException e) {
+		return Error.of(HttpStatus.NOT_FOUND.value(), e.getMessage());
 	}
 
 	@ExceptionHandler(PlayerAlreadyBelongsToClubException.class)

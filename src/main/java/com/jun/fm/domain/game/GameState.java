@@ -5,5 +5,6 @@ package com.jun.fm.domain.game;
  *
  */
 public enum GameState {
-	OPEN
+	OPENED,
+	CLOSED
 }

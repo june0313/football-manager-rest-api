@@ -5,18 +5,22 @@ import com.jun.fm.domain.application.Application;
 import com.jun.fm.domain.application.ApplicationState;
 import com.jun.fm.domain.club.Club;
 import com.jun.fm.domain.game.Game;
+import com.jun.fm.domain.game.GameState;
 import com.jun.fm.domain.player.Player;
 import com.jun.fm.dto.ApplicationDto;
 import com.jun.fm.repository.ApplicationRepository;
 import com.jun.fm.repository.GameRepository;
 import com.jun.fm.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -60,4 +64,31 @@ public class ApplicationService {
 		return ApplicationDto.from(applicationRepository.save(application));
 	}
 
+	public List<Application> findByGameId(Long gameId, Pageable pageable) {
+		Game game = gameRepository.findOne(gameId);
+
+		if (game == null) {
+			throw new GameNotFoundException(gameId);
+		}
+
+		Page<Application> applicationsPage = applicationRepository.findAllByGame(game, pageable);
+		return applicationsPage.getContent();
+	}
+
+	public void accept(Long gameId, Long applicationId) {
+		Game game = gameRepository.findOne(gameId);
+
+		List<Application> applications = game.getApplications();
+
+		applications.forEach(application -> {
+			if (applicationId.equals(application.getId())) {
+				application.setState(ApplicationState.ACCEPTED);
+			} else {
+				application.setState(ApplicationState.REJECTED);
+			}
+		});
+
+		game.setState(GameState.CLOSED);
+
+	}
 }

@@ -34,7 +34,7 @@ public class Game {
 	private String details;
 
 	@Enumerated(EnumType.STRING)
-	private GameState state = GameState.OPEN;
+	private GameState state = GameState.OPENED;
 
 	private LocalDateTime createdDate;
 

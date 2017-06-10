@@ -87,7 +87,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
 		Game game = new Game();
 		game.setHost(club);
-		game.setState(GameState.OPEN);
+		game.setState(GameState.OPENED);
 		game.setDetails("게임해요");
 		game.setMatchLocation("관악구 축구장");
 		game.setMatchDate(LocalDateTime.now().plusDays(7));

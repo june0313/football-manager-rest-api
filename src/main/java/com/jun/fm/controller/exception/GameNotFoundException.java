@@ -5,5 +5,6 @@ package com.jun.fm.controller.exception;
  */
 public class GameNotFoundException extends RuntimeException {
 	public GameNotFoundException(Long gameId) {
+		super(String.format("Game %d not found", gameId	));
 	}
 }
