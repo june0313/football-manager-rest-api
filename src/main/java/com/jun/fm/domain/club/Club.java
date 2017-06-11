@@ -1,6 +1,7 @@
 package com.jun.fm.domain.club;
 
 import com.google.common.collect.Lists;
+import com.jun.fm.domain.BaseEntity;
 import com.jun.fm.domain.application.Application;
 import com.jun.fm.domain.game.Game;
 import com.jun.fm.domain.player.Player;
@@ -20,13 +21,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Accessors(chain = true)
-@NoArgsConstructor(staticName = "create")
-public class Club {
-
-	@Id
-	@GeneratedValue
-	private Long id;
+public class Club extends BaseEntity {
 
 	private String name;
 
@@ -41,21 +36,6 @@ public class Club {
 
 	@OneToMany(mappedBy = "club")
 	private List<Application> applications;
-
-	private LocalDateTime createdDate;
-
-	private LocalDateTime modifiedDate;
-
-	@PrePersist
-	private void prePersist() {
-		this.createdDate = LocalDateTime.now();
-		this.modifiedDate = LocalDateTime.now();
-	}
-
-	@PreUpdate
-	private void preUpdate() {
-		this.modifiedDate = LocalDateTime.now();
-	}
 
 	public void addPlayer(Player player) {
 		if (this.players == null) {

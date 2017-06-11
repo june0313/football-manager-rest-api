@@ -22,7 +22,6 @@ public class GameDto {
 		gameDto.setDetails(game.getDetails());
 		gameDto.setMatchDate(game.getMatchDate());
 		gameDto.setMatchLocation(game.getMatchLocation());
-
 		return gameDto;
 	}
 

@@ -62,7 +62,7 @@ public class ClubController {
 			throw new PlayerAlreadyBelongsToClubException(player.getId(), player.getClub().getId());
 		}
 
-		Club club = clubService.create(player, clubDto.toEntity());
+		Club club = clubService.create(player, clubDto);
 
 		if (club == null) {
 			throw new ClubCreationFailureException();

@@ -1,13 +1,13 @@
 package com.jun.fm.domain.player;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jun.fm.domain.BaseEntity;
 import com.jun.fm.domain.club.Club;
 import com.jun.fm.domain.role.Role;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -17,11 +17,7 @@ import java.util.List;
 @Entity
 @Data(staticConstructor = "create")
 @Accessors(chain = true)
-public class Player {
-
-	@Id
-	@GeneratedValue
-	private Long id;
+public class Player extends BaseEntity {
 
 	@Column(unique = true)
 	private String name;
@@ -41,21 +37,6 @@ public class Player {
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Club club;
 
-	private LocalDateTime createdDate;
-
-	private LocalDateTime modifiedDate;
-
-	@PrePersist
-	private void prePersist() {
-		this.createdDate = LocalDateTime.now();
-		this.modifiedDate = LocalDateTime.now();
-	}
-
-	@PreUpdate
-	private void preUpdate() {
-		this.modifiedDate = LocalDateTime.now();
-	}
-
 	public boolean belongToClub() {
 		return club != null;
 	}
@@ -67,10 +48,6 @@ public class Player {
 
 		this.club = club;
 		club.addPlayer(this);
-
-		if (club.getOwner() == null) {
-			club.setOwner(this);
-		}
 	}
 
 }

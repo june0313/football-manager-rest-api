@@ -22,7 +22,4 @@ public class ClubDto {
 		return clubDto;
 	}
 
-	public Club toEntity() {
-		return Club.create().setId(id).setName(name);
-	}
 }

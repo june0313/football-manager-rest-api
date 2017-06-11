@@ -1,6 +1,7 @@
 package com.jun.fm.domain.game;
 
 import com.google.common.collect.Lists;
+import com.jun.fm.domain.BaseEntity;
 import com.jun.fm.domain.application.Application;
 import com.jun.fm.domain.club.Club;
 import lombok.Data;
@@ -15,11 +16,7 @@ import java.util.List;
  */
 @Entity
 @Data
-public class Game {
-
-	@Id
-	@GeneratedValue
-	private Long id;
+public class Game extends BaseEntity {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Club host;
@@ -36,10 +33,6 @@ public class Game {
 	@Enumerated(EnumType.STRING)
 	private GameState state = GameState.OPENED;
 
-	private LocalDateTime createdDate;
-
-	private LocalDateTime modifiedDate;
-
 	public void setHost(Club club) {
 		this.host = club;
 		club.addGame(this);
@@ -51,17 +44,6 @@ public class Game {
 		}
 
 		this.applications.add(application);
-	}
-
-	@PrePersist
-	private void prePersist() {
-		this.createdDate = LocalDateTime.now();
-		this.modifiedDate = LocalDateTime.now();
-	}
-
-	@PreUpdate
-	private void preUpdate() {
-		this.modifiedDate = LocalDateTime.now();
 	}
 
 }

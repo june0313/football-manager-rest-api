@@ -67,15 +67,21 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	}
 
 	private void createClubs() {
-		Club clubReal = Club.create().setName("real");
+		Club clubReal = new Club();
+		clubReal.setName("real");
+		clubReal.setOwner(playerRepository.findOne(1L));
 		playerRepository.findOne(1L).setClub(clubReal);
 		playerRepository.findOne(2L).setClub(clubReal);
 
-		Club clubArsenal = Club.create().setName("arsenal");
+		Club clubArsenal = new Club();
+		clubArsenal.setName("arsenal");
+		clubArsenal.setOwner(playerRepository.findOne(3L));
 		playerRepository.findOne(3L).setClub(clubArsenal);
 		playerRepository.findOne(4L).setClub(clubArsenal);
 
-		Club clubManu = Club.create().setName("manu");
+		Club clubManu = new Club();
+		clubManu.setName("manu");
+		clubManu.setOwner(playerRepository.findOne(5L));
 		playerRepository.findOne(5L).setClub(clubManu);
 		playerRepository.findOne(6L).setClub(clubManu);
 
